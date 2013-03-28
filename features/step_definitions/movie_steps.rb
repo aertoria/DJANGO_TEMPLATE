@@ -54,14 +54,21 @@ end
 
 
 ###Then I should see whatever, with that stupid space matching
-Then /^I should see a movie list entry with title "(.*?)" and director (\s)?"(.*?)"$/ do |title, space, director|
-  puts "you have seen title"+title+director
+Then /^I should see a movie list entry with title (\s)?"(.*?)" and director (\s)?"(.*?)"$/ do |space1, title, space2, director|
+  puts "You have seen title "+title+" with director "+director
   page.should have_content(title)
   page.should have_content(director)
 end
 
+Then /^I should not see a movie list entry with title (\s)?"(.*?)" and director (\s)?"(.*?)"$/ do |space1, title, space2, director|
+  puts "You have not seen title "+title+" with director "+director
+  page.should_not have_content(title)
+  page.should_not have_content(director)
+end
+
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
+  puts "You can see"+text
   if page.respond_to? :should
     page.should have_content(text)
   else
@@ -70,16 +77,26 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
 end
 
 
-
-
 #####Scenario 2nd
 #####Scenario 2nd
 #####Scenario 2nd
-When /^I have opted to view movies with the same director$/ do |arg1|
-  click_button 'Find Movies With Same Director'
+When /^I have opted to view movies with the same director$/ do
+  click_on 'Find Movies With Same Director'
 end
 
 
+#####Scenario 3rd
+#####Scenario 3rd
+#####Scenario 3rd
+Then /^I should not see "(.*?)"$/ do |something|
+  puts "You did not see "+something
+  page.should_not have_content(something)
+end
+
+When /^I have opted to view movies by the same director$/ do
+  puts "We just clicked that button"
+  click_on 'Find Movies With Same Director'
+end
 
 
 # New step definitions to be completed for HW3. 
