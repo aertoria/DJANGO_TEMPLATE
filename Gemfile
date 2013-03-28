@@ -13,10 +13,14 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'rspec-rails'
+  gem 'simplecov'
+  gem 'rspec-rails'
 end
 group :test do
   gem 'cucumber-rails'
   gem 'cucumber-rails-training-wheels'
+  gem 'simplecov'
+  gem 'rspec-rails'
 end
 group :production do
 #  gem 'pg'
