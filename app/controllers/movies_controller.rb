@@ -7,8 +7,8 @@ class MoviesController < ApplicationController
   end
 
   def index
+    flash[:notice] = params[:mark]
     sort = params[:sort]
-    name = params[:name]
     case sort
     when 'title'
       ordering,@title_header = {:order => :title}, 'hilite'
@@ -28,20 +28,29 @@ class MoviesController < ApplicationController
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
 
-    if sort != 'title' && sort != 'release_date' && !sort.nil?
-       @movies = Movie.where("director" => sort)
-    else
-       @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
-       if sort.nil? && !name.nil?
-         flash[:notice] = name + "has no director"
-       end
-    end
+    
+    @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
+
   end
+
+  
+
+
+  ####this is the new action leads to new view dir
+  def dir
+    @movies = Movie.where("director" => params[:movie_director])
+
+    @notes = 'good'
+    if params[:movie_director].nil?||params[:movie_director]==''
+      #flash[:notice] = params[:movie_director]+" this is director"
+      @notes = params[:movie_title]+" has no director"
+    end
+  end 
+
 
   def new
     # default: render 'new' template
   end
-
   def create
     @movie = Movie.create!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully created."

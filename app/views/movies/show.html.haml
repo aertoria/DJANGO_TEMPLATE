@@ -21,5 +21,11 @@
 = button_to 'Delete', movie_path(@movie), :method => :delete, :confirm => 'Are you sure?'
 = link_to 'Back to movie list', movies_path
 %br
-= link_to 'Find Movies With Same Director', movies_path(:sort => @movie.director, :name => @movie.title), :id => 'Find Movies With Same Director'
+= link_to 'Find_Movies_With_Same_Director', dir_path(:movie_director => @movie.director, :movie_title => @movie.title), :id => 'Find Movies With Same Director'
+
+-#%a#Find_Movies_With_Same_Director{:href=>"/dir?movie_title=#{@movie.title}&movie_director=#{@movie.director}"}Find_Movies_With_Same_Director
+
+-#I don't like this:
+-#= link_to 'Find Movies With Same Director', movies_path(:sort => @movie.director), :id => 'Find Movies With Same Director'
+-# instead, I use  <a href=""></a>
 
