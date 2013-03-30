@@ -20,8 +20,6 @@ class MoviesController < ApplicationController
     if @selected_ratings == {}
       @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
-    
-
     @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
 
   end
