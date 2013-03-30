@@ -1,0 +1,23 @@
+-#  This file is app/views/movies/index.html.haml
+%h1 All Movies With Same Directors
+
+
+
+
+%table#movies
+  %thead
+    %tr
+      %th header
+      %th Rating
+      %th Release_date
+      %th director
+      %th More Info
+  %tbody
+    - @movies.each do |movie|
+      %tr
+        %td= movie.title 
+        %td= movie.rating
+        %td= movie.release_date
+        %td= movie.director
+        %td= link_to "More about #{movie.title}", movie_path(movie)
+= @notes
