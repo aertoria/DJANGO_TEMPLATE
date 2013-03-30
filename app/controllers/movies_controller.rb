@@ -7,7 +7,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    flash[:notice] = params[:mark]
     sort = params[:sort]
     case sort
     when 'title'
@@ -22,13 +21,7 @@ class MoviesController < ApplicationController
       @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
     
-    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
-      session[:sort] = sort
-      session[:ratings] = @selected_ratings
-      redirect_to :sort => sort, :ratings => @selected_ratings and return
-    end
 
-    
     @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
 
   end
@@ -38,8 +31,8 @@ class MoviesController < ApplicationController
 
   ####this is the new action leads to new view dir
   def dir
-    @movies = Movie.where("director" => params[:movie_director])
-
+    @movies = Movie.where("director" => params[:movie_director])    
+    #@movies = Movie.same_director_service(params[:movie_director])
     @notes = 'good'
     if params[:movie_director].nil?||params[:movie_director]==''
       #flash[:notice] = params[:movie_director]+" this is director"
@@ -51,11 +44,6 @@ class MoviesController < ApplicationController
   def new
     # default: render 'new' template
   end
-  def create
-    @movie = Movie.create!(params[:movie])
-    flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
-  end
 
   def edit
     @movie = Movie.find params[:id]
@@ -66,13 +54,6 @@ class MoviesController < ApplicationController
     @movie.update_attributes!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully updated."
     redirect_to movie_path(@movie)
-  end
-
-  def destroy
-    @movie = Movie.find(params[:id])
-    @movie.destroy
-    flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
   end
 
 end

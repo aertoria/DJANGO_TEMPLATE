@@ -68,7 +68,7 @@ end
 
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
-  puts "You can see"+text
+  puts "You can see "+text
   if page.respond_to? :should
     page.should have_content(text)
   else
@@ -81,7 +81,7 @@ end
 #####Scenario 2nd
 #####Scenario 2nd
 When /^I have opted to view movies with the same director$/ do
-  click_on 'Find Movies With Same Director'
+  click_on 'Find_Movies_With_Same_Director'
 end
 
 
