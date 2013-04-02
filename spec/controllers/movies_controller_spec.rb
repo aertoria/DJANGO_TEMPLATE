@@ -2,20 +2,25 @@ require 'spec_helper'
 
 describe MoviesController do
   describe 'dir' do
-    it 'should be given movie_title and movie_director' do
-       fake_results = [mock('movie_result')]
-       post :dir, {:movie_director => 'Ridley Scott', :movie_title => 'Blase Runner'}
+    it 'happy path: should call the model method in movie class and return list of movie object' do
+      #m = stub_model(Movie)
+      #Movie.stub(:sd_service).and_return{[m]}
+      post 'dir', {:movie_director => 'Yi', :movie_title => 'SUMER'}
+      assigns[:notes].should eq('good')
+    end
+
+
+     it 'sad path: should call the model method in movie class and return list of movie object' do
+      #m = stub_model(Movie)
+      #Movie.stub(:sd_service).and_return{[m]}
+      post 'dir', {:movie_title => 'COOL'}
+      assigns[:notes].should eq('COOL has no director')
+      assigns[:movies].should eq([])
     end
   end
-
-  describe 'destory' do
-     m = Movie.new()
-     
-  end
-
-  describe 'create' do
-     it 'should create a new movie' do
-        
-     end
-  end
 end
+
+
+
+
+
